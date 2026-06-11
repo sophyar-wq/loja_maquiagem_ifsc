@@ -1,0 +1,194 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#faf7ff;
+    color:#333;
+}
+
+/* HEADER */
+
+header{
+    background:white;
+    text-align:center;
+    padding:30px;
+    box-shadow:0 2px 15px rgba(0,0,0,0.08);
+}
+
+header h1{
+    color:#8b5cf6;
+    font-size:38px;
+}
+
+header p{
+    color:#777;
+    margin-top:10px;
+}
+
+/* LOGIN E CADASTRO */
+
+.container{
+    width:420px;
+    margin:60px auto;
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(139,92,246,0.12);
+}
+
+.container h1{
+    text-align:center;
+    color:#8b5cf6;
+    margin-bottom:25px;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    border:1px solid #e9d5ff;
+    border-radius:14px;
+    margin-bottom:15px;
+    outline:none;
+}
+
+input:focus{
+    border:1px solid #8b5cf6;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:#8b5cf6;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#7c3aed;
+}
+
+a{
+    color:#8b5cf6;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* CARRINHO */
+
+.carrinho{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:white;
+    color:#8b5cf6;
+    padding:12px 20px;
+    border-radius:30px;
+    box-shadow:0 5px 15px rgba(139,92,246,0.15);
+    font-weight:bold;
+}
+
+/* PRODUTOS */
+
+.produtos{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    padding:40px;
+}
+
+.produto{
+    width:280px;
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    transition:.3s;
+}
+
+.produto:hover{
+    transform:translateY(-8px);
+}
+
+.produto img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+}
+
+.produto-info{
+    padding:20px;
+}
+
+.produto h3{
+    color:#8b5cf6;
+    margin-bottom:10px;
+}
+
+.produto p{
+    color:#666;
+}
+
+.preco{
+    color:#8b5cf6;
+    font-size:24px;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+/* TOTAL */
+
+.total-box{
+    text-align:center;
+    margin-top:10px;
+}
+
+.total-box h2{
+    color:#8b5cf6;
+}
+
+/* BOTÃO FINALIZAR */
+
+.finalizar{
+    width:300px;
+    margin:30px auto 60px auto;
+    display:block;
+}
+
+
+.sobre,
+.contato,
+.depoimentos{
+    background:white;
+    margin:40px auto;
+    width:90%;
+    max-width:1200px;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.sobre h2,
+.contato h2,
+.depoimentos h2{
+    color:#8b5cf6;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.card{
+    background:#faf7ff;
+    padding:20px;
+    margin:15px;
+    border-radius:15px;
+}
+
