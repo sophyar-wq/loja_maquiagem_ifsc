@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seu carrinho — Sephiana</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose:    #c97d8e;
+    --rose-lt: #f7edf0;
+    --rose-dk: #7a3f4e;
+    --ink:     #1c1517;
+    --muted:   #7a6e70;
+    --line:    #e8dde0;
+    --surface: #fdf8f9;
+    --white:   #ffffff;
+    --dark:    #2b1820;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ─────────────────────────────────────── */
+  nav {
+    background: var(--dark);
+    padding: 1rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #e8c5ce;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav-link {
+    color: #e8c5ce;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover { color: var(--white); }
+
+  /* ── PAGE HEADER ─────────────────────────────── */
+  .page-header {
+    max-width: 980px;
+    margin: 2.5rem auto 1.5rem;
+    padding: 0 2rem;
+  }
+
+  .page-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .page-header p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* ── LAYOUT ──────────────────────────────────── */
+  .carrinho-wrap {
+    max-width: 980px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 1.8rem;
+    align-items: start;
+  }
+
+  /* ── LISTA DE ITENS ──────────────────────────── */
+  .lista-itens {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .item-carrinho {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+  }
+
+  .item-img {
+    width: 68px;
+    height: 68px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 8px;
+    background: var(--rose-lt);
+  }
+
+  .item-info {
+    flex: 1 1 160px;
+    min-width: 140px;
+  }
+
+  .item-info h3 {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .item-preco-unit {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .item-qtd {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .btn-qtd {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 7px;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-qtd:hover { border-color: var(--rose); background: var(--rose-lt); }
+
+  .item-qtd span {
+    min-width: 1.4rem;
+    text-align: center;
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .item-subtotal {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--rose-dk);
+    min-width: 76px;
+    text-align: right;
+  }
+
+  .btn-remover {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.05rem;
+    cursor: pointer;
+    padding: 0.2rem 0.3rem;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .btn-remover:hover { color: #b5697a; background: var(--rose-lt); }
+
+  /* ── RESUMO ──────────────────────────────────── */
+  .resumo-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 88px;
+  }
+
+  .resumo-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.1rem;
+    color: var(--ink);
+  }
+
+  .resumo-linha {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .resumo-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 0.9rem;
+    margin-top: 0.4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .resumo-total span:first-child {
+    font-size: 0.85rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .resumo-total .valor {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--rose-dk);
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--rose);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover { background: #b5697a; }
+  .btn-primary:active { transform: scale(0.99); }
+
+  .nota-pagamento {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* ── VAZIO ───────────────────────────────────── */
+  .carrinho-vazio {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 5rem 2rem;
+    grid-column: 1 / -1;
+  }
+
+  .carrinho-vazio svg {
+    width: 58px;
+    height: 58px;
+    color: var(--rose);
+  }
+
+  .carrinho-vazio h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .carrinho-vazio p {
+    font-size: 0.87rem;
+    color: var(--muted);
+    max-width: 320px;
+    line-height: 1.6;
+  }
+
+  .carrinho-vazio a.btn-primary {
+    display: inline-block;
+    width: auto;
+    padding: 0.75rem 1.8rem;
+    text-decoration: none;
+  }
+
+  @media (max-width: 760px) {
+    .carrinho-wrap { grid-template-columns: 1fr; }
+    .resumo-card { position: static; }
+  }
+
+  @media (max-width: 480px) {
+    nav { padding: 1rem 1.2rem; }
+    .page-header, .carrinho-wrap { padding: 0 1.2rem; }
+    .item-subtotal { text-align: left; order: 4; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Sephiana</span>
+  <a class="nav-link" href="produtos.html">← Continuar comprando</a>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <h1>Seu carrinho</h1>
+  <p id="subtitulo-carrinho">Revise os itens antes de finalizar a compra.</p>
+</div>
+
+<div class="carrinho-wrap">
+
+  <!-- VAZIO -->
+  <div class="carrinho-vazio" id="carrinho-vazio">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+      <path d="M3 6h18"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+    <h2>Seu carrinho está vazio</h2>
+    <p>Ainda não há produtos por aqui. Que tal dar uma olhada na nossa coleção?</p>
+    <a class="btn-primary" href="produtos.html">Ver produtos</a>
+  </div>
+
+  <!-- LISTA -->
+  <div class="lista-itens" id="lista-itens"></div>
+
+  <!-- RESUMO -->
+  <div class="resumo-card" id="resumo-compra">
+    <h2>Resumo do pedido</h2>
+    <div class="resumo-linha">
+      <span id="total-itens">0 itens</span>
+      <span id="subtotal-valor">R$ 0,00</span>
+    </div>
+    <div class="resumo-total">
+      <span>Total</span>
+      <span class="valor" id="total-valor">R$ 0,00</span>
+    </div>
+    <button class="btn-primary" onclick="finalizarCompra()">Finalizar compra</button>
+    <p class="nota-pagamento">Compra simulada para fins de demonstração — nenhuma cobrança real é feita.</p>
+  </div>
+
+</div>
+
+<script src="cart.js"></script>
+<script>
+function renderCarrinho() {
+  const itens = getCarrinho();
+  const lista = document.getElementById('lista-itens');
+  const vazio = document.getElementById('carrinho-vazio');
+  const resumo = document.getElementById('resumo-compra');
+  const subtitulo = document.getElementById('subtitulo-carrinho');
+
+  if (itens.length === 0) {
+    lista.style.display = 'none';
+    resumo.style.display = 'none';
+    vazio.style.display = 'flex';
+    subtitulo.textContent = 'Nenhum item adicionado ainda.';
+    atualizarBadge();
+    return;
+  }
+
+  lista.style.display = 'flex';
+  resumo.style.display = 'block';
+  vazio.style.display = 'none';
+
+  lista.innerHTML = itens.map(item => `
+    <div class="item-carrinho">
+      <img class="item-img" src="${item.imagem}" alt="${item.nome}">
+      <div class="item-info">
+        <h3>${item.nome}</h3>
+        <span class="item-preco-unit">${formatarPreco(item.preco)} cada</span>
+      </div>
+      <div class="item-qtd">
+        <button class="btn-qtd" aria-label="Diminuir quantidade" onclick="mudarQtd('${item.id}', -1)">−</button>
+        <span>${item.quantidade}</span>
+        <button class="btn-qtd" aria-label="Aumentar quantidade" onclick="mudarQtd('${item.id}', 1)">+</button>
+      </div>
+      <span class="item-subtotal">${formatarPreco(item.preco * item.quantidade)}</span>
+      <button class="btn-remover" aria-label="Remover item" onclick="removerItemUI('${item.id}')">🗑</button>
+    </div>
+  `).join('');
+
+  const totalItens = calcularTotalQuantidade(itens);
+  const totalValor = calcularTotalValor(itens);
+
+  subtitulo.textContent = 'Revise os itens antes de finalizar a compra.';
+  document.getElementById('total-itens').textContent =
+    totalItens + (totalItens === 1 ? ' item' : ' itens');
+  document.getElementById('subtotal-valor').textContent = formatarPreco(totalValor);
+  document.getElementById('total-valor').textContent = formatarPreco(totalValor);
+
+  atualizarBadge();
+}
+
+function mudarQtd(id, delta) {
+  alterarQuantidade(id, delta);
+  renderCarrinho();
+}
+
+function removerItemUI(id) {
+  removerItem(id);
+  renderCarrinho();
+}
+
+function finalizarCompra() {
+  const itens = getCarrinho();
+  if (itens.length === 0) return;
+
+  const pedido = {
+    itens,
+    total: calcularTotalValor(itens),
+    data: new Date().toISOString()
+  };
+
+  localStorage.setItem(ORDER_KEY, JSON.stringify(pedido));
+  limparCarrinho();
+  window.location.href = 'finalizado.html';
+}
+
+document.addEventListener('DOMContentLoaded', renderCarrinho);
+</script>
+
+</body>
+</html>

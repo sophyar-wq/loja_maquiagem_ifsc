@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compra finalizada — Sephiana</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose:    #c97d8e;
+    --rose-lt: #f7edf0;
+    --rose-dk: #7a3f4e;
+    --ink:     #1c1517;
+    --muted:   #7a6e70;
+    --line:    #e8dde0;
+    --surface: #fdf8f9;
+    --white:   #ffffff;
+    --dark:    #2b1820;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+  }
+
+  .confirm-card {
+    width: 100%;
+    max-width: 460px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 2.8rem 2.4rem;
+    text-align: center;
+  }
+
+  .icon-check {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 1.4rem;
+    background: var(--rose-lt);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pop-in 0.35s ease;
+  }
+
+  .icon-check svg { width: 32px; height: 32px; }
+
+  .icon-check svg path {
+    stroke-dasharray: 28;
+    stroke-dashoffset: 28;
+    animation: draw-check 0.45s 0.25s ease forwards;
+  }
+
+  @keyframes pop-in {
+    from { transform: scale(0.6); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes draw-check {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icon-check { animation: none; }
+    .icon-check svg path { animation: none; stroke-dashoffset: 0; }
+  }
+
+  .confirm-card h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .confirm-card .subtitle {
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin-bottom: 1.6rem;
+  }
+
+  .meta-pedido {
+    display: flex;
+    justify-content: space-between;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.8rem 1.1rem;
+    margin-bottom: 1.4rem;
+    text-align: left;
+  }
+
+  .meta-pedido div span {
+    display: block;
+  }
+
+  .meta-pedido .label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 0.15rem;
+  }
+
+  .meta-pedido .valor {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .itens-pedido {
+    text-align: left;
+    margin-bottom: 1.1rem;
+  }
+
+  .linha-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--ink);
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .linha-item:last-child { border-bottom: none; }
+
+  .linha-item .nome-qtd { color: var(--muted); }
+
+  .total-pedido {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 0.9rem;
+    margin-top: 0.3rem;
+    border-top: 1px solid var(--line);
+    margin-bottom: 1.6rem;
+  }
+
+  .total-pedido span:first-child {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .total-pedido .valor {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--rose-dk);
+  }
+
+  .btn-primary {
+    display: inline-block;
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--rose);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover { background: #b5697a; }
+  .btn-primary:active { transform: scale(0.99); }
+
+  /* ── SEM PEDIDO ──────────────────────────────── */
+  .sem-pedido {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .sem-pedido svg {
+    width: 48px;
+    height: 48px;
+    color: var(--rose);
+  }
+
+  .sem-pedido h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+
+  .sem-pedido p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="confirm-card">
+
+  <!-- COM PEDIDO -->
+  <div id="resumo-pedido">
+    <div class="icon-check">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#7a3f4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12.5 9.5 17 19 7.5"/>
+      </svg>
+    </div>
+
+    <h1>Compra finalizada!</h1>
+    <p class="subtitle">Seu pedido foi recebido com sucesso.</p>
+
+    <div class="meta-pedido">
+      <div>
+        <span class="label">Pedido</span>
+        <span class="valor" id="numero-pedido">—</span>
+      </div>
+      <div>
+        <span class="label">Data</span>
+        <span class="valor" id="data-pedido">—</span>
+      </div>
+    </div>
+
+    <div class="itens-pedido" id="itens-pedido"></div>
+
+    <div class="total-pedido">
+      <span>Total pago</span>
+      <span class="valor" id="total-pedido">R$ 0,00</span>
+    </div>
+
+    <a class="btn-primary" href="produtos.html">Voltar à loja</a>
+  </div>
+
+  <!-- SEM PEDIDO -->
+  <div class="sem-pedido" id="sem-pedido">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+      <path d="M3 6h18"/>
+      <path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+    <h1>Nenhuma compra recente</h1>
+    <p>Não encontramos nenhum pedido finalizado nesta sessão.</p>
+    <a class="btn-primary" href="produtos.html">Ir para a loja</a>
+  </div>
+
+</div>
+
+<script src="cart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const dados = localStorage.getItem(ORDER_KEY);
+  const semPedido = document.getElementById('sem-pedido');
+  const comPedido = document.getElementById('resumo-pedido');
+
+  if (!dados) {
+    comPedido.style.display = 'none';
+    semPedido.style.display = 'flex';
+    return;
+  }
+
+  let pedido;
+  try {
+    pedido = JSON.parse(dados);
+  } catch {
+    comPedido.style.display = 'none';
+    semPedido.style.display = 'flex';
+    return;
+  }
+
+  const lista = document.getElementById('itens-pedido');
+  lista.innerHTML = pedido.itens.map(item => `
+    <div class="linha-item">
+      <span class="nome-qtd">${item.quantidade}× ${item.nome}</span>
+      <span>${formatarPreco(item.preco * item.quantidade)}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('total-pedido').textContent = formatarPreco(pedido.total);
+
+  const data = new Date(pedido.data);
+  document.getElementById('numero-pedido').textContent =
+    '#' + data.getTime().toString().slice(-8);
+  document.getElementById('data-pedido').textContent =
+    data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+});
+</script>
+
+</body>
+</html>
